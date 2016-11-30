@@ -21,7 +21,7 @@
 enum RotateState {Rotate_INIT, Rotate_Wait, go_to_drink} rotate_state;
 enum DispenseState {Dispense_INIT, Dispense_Wait, Dispense_Up, Dispense_Hold, Dispense_Down} dispense_state;
 enum PollUSARTState {PollUSART_INIT, PollUSART_Wait} poll_usart_state;
-enum MakeDrinkState {MakeDrink_INIT, MakeDrink_Wait, MakeDrink_Rotate} make_drink_state;
+enum MakeDrinkState {MakeDrink_INIT, MakeDrink_Wait, MakeDrink, MakeDrink_Rotate, MakeDrink_Dispense} make_drink_state;
 enum WritePORTAState {WritePORTA_INIT, WritePORTA_Wait} write_porta_state;
 	
 #define A 0x01
@@ -53,14 +53,14 @@ unsigned char rotate_stepper = 0, linear_stepper = 0;
 unsigned short dispense_cnt = 0;
 unsigned short dispense_totalcnt = 660;
 unsigned char dispense_index = 0;
-unsigned short dispense_hold = 500; //dispense time multplied by 4, 250 * 4 = 1000, 1 second
+unsigned short dispense_hold = 125; //dispense time multplied by 8, 250 * 8 = 2000, 2 seconds
 unsigned short dispense_hold_cnt = 0;
 
 unsigned char received_message = 0;
 unsigned char make_drink_flag = 0;
 unsigned char drink_to_make = 0;
 
-unsigned char drinks[][] = {{0,1,0,1,0,0},{1,1,0,0,1,0},{0,0,1,0,1,1},{1,0,0,0,1,0},{0,1,0,1,0,1},{1,0,0,1,0,1}};
+unsigned char drinks[6][6] = {{1,0,0,0,0,0},{1,1,0,0,1,0},{0,0,1,0,1,1},{1,0,0,0,1,0},{0,1,0,1,0,1},{1,0,0,1,0,1}};
 unsigned char dispense_flag = 0;
 unsigned char rotate_flag = 0;
 unsigned char make_drink_cnt = 0;
@@ -161,14 +161,15 @@ void Rotate_Tick(){
 		case Rotate_Wait:
 			cnt = 0; //index in list of steps
 			total_cnt = 0; //count of total number of steps
-			drink = 0; //drink selected
+			//drink = 0; //drink selected
 			drink_select = ~PINB & 0x3F;
-			lcd_str = 0;
+			/*lcd_str = 0;
 			received = USART_HasReceived(0);
 			if(received) {
 				lcd_str = USART_Receive(0);
 				//USART_Send_String(lcd_str,1);
 			}
+			*/
 			break;
 		case go_to_drink:
 			if (current_position < drink) {
@@ -210,11 +211,10 @@ void Rotate_Tick(){
 				steps_next_drink = abs(next_drink * (drink - current_position));
 				rotate_state = go_to_drink;
 			}
-			else if (lcd_str == 0xAA) {
-					drink = USART_Receive(0) - 1;	
+			else if (rotate_flag == 0x01) {
 					steps_next_drink = abs(next_drink * (drink - current_position));
 					rotate_state = go_to_drink;
-						PORTC = drink;
+					PORTC = drink;
 			}
 			else {
 				rotate_state = Rotate_Wait;
@@ -226,6 +226,7 @@ void Rotate_Tick(){
 			}
 			else {
 				current_position = drink;
+				rotate_flag = 0x00;
 				rotate_state = Rotate_Wait;
 			}
 			break;
@@ -271,6 +272,10 @@ void Dispense_Tick(){
 				dispense_state = Dispense_Up;	
 				dispense_cnt = 0;
 			}
+			else if (dispense_flag == 0x01) {
+				dispense_state = Dispense_Up;
+				dispense_cnt = 0;
+			}
 			else {
 				dispense_state = Dispense_Wait;
 			}
@@ -299,6 +304,7 @@ void Dispense_Tick(){
 				dispense_state = Dispense_Wait;
 				dispense_hold_cnt = 0;
 				dispense_cnt = 0;
+				dispense_flag = 0;
 			}
 			else {
 				dispense_state = Dispense_Down;
@@ -345,6 +351,7 @@ void PollUSART_Tick() {
 				if (received_message == 0xAA) {
 					make_drink_flag = 0x01;
 					drink_to_make = USART_Receive(0);
+					USART_Flush(0);
 				}
 				else {
 					make_drink_flag = 0x00;
@@ -375,7 +382,11 @@ void MakeDrink_Tick() {
 		case MakeDrink_Wait:
 			make_drink_cnt = 0;
 			break;
+		case MakeDrink:
+			break;
 		case MakeDrink_Rotate:
+			break;
+		case MakeDrink_Dispense:
 			break;
 		default:
 			break;
@@ -383,18 +394,62 @@ void MakeDrink_Tick() {
 	switch (make_drink_state) { //transitions
 		case MakeDrink_INIT:
 			make_drink_state = MakeDrink_Wait;
+			make_drink_cnt = 0;
+			rotate_flag = 0;
+			dispense_flag = 0;
 			break;
 		case MakeDrink_Wait:
-			if (make_drink_flag == 0x01) {
-				make_drink_state = MakeDrink_Rotate;
+			if (make_drink_flag == 0x01 && rotate_flag == 0 && dispense_flag == 0) {
+				USART_Send_String("page page2",0);
+				make_drink_state = MakeDrink;
 			}
 			else {
 				make_drink_state = MakeDrink_Wait;
 			}
 			break;
+		case MakeDrink:
+			if (drinks[drink_to_make][make_drink_cnt]==0x01 && make_drink_cnt < 6) {
+				make_drink_state = MakeDrink_Rotate;
+				rotate_flag = 0x01;
+				drink = make_drink_cnt;
+			}
+			else if (make_drink_cnt >= 6) {
+				make_drink_state = MakeDrink_Wait;
+				USART_Send_String("page page0",0);
+				make_drink_flag = 0x00;
+				rotate_flag = 0x01;
+				drink = 0;
+			}
+			else {
+				make_drink_cnt++;
+				make_drink_state = MakeDrink;
+			}
+			break;
 		case MakeDrink_Rotate:
-			if (drinks[drink_to_make][make_drink_cnt]) {
-				
+			if (rotate_flag == 0x00) {
+				dispense_flag = 0x01;
+				make_drink_state = MakeDrink_Dispense;
+			}
+			else {
+				make_drink_state = MakeDrink_Rotate;
+			}
+			break;
+		case MakeDrink_Dispense:
+			if (dispense_flag == 0x00) {// && make_drink_cnt < 6) {
+				make_drink_cnt++;
+				make_drink_state = MakeDrink;
+			}
+			/*
+			else if (dispense_flag == 0x00 && make_drink_cnt >= 6) {
+				make_drink_state = MakeDrink_Wait;
+				USART_Send_String("page page0",0);
+				make_drink_flag = 0x00;
+				rotate_flag = 0x01;
+				drink = 0;
+			}
+			*/
+			else {
+				make_drink_state = MakeDrink_Dispense;
 			}
 			break;
 		default:

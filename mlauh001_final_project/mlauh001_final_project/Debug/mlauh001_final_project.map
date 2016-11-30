@@ -91,22 +91,19 @@ Discarded input sections
                 0x00000000       0x14 mlauh001_final_project.o
  .text.USART_HasReceived
                 0x00000000       0x14 mlauh001_final_project.o
- .text.USART_Flush
-                0x00000000       0x42 mlauh001_final_project.o
- .text.USART_Send
-                0x00000000       0x24 mlauh001_final_project.o
  .text.UART_Return_String
                 0x00000000       0x52 mlauh001_final_project.o
- .text.USART_Send_String
-                0x00000000       0x56 mlauh001_final_project.o
  .text.Rotate_Init
                 0x00000000        0x6 mlauh001_final_project.o
  .text.Dispense_Init
                 0x00000000        0x6 mlauh001_final_project.o
  .text.WritePORTA_Init
                 0x00000000        0x6 mlauh001_final_project.o
- .bss.dummy.2320
-                0x00000000        0x1 mlauh001_final_project.o
+ .text.PollUSART_Init
+                0x00000000        0x6 mlauh001_final_project.o
+ .text.MakeDrink_Init
+                0x00000000        0x6 mlauh001_final_project.o
+ .bss.received  0x00000000        0x1 mlauh001_final_project.o
  .text          0x00000000        0x0 port.o
  .data          0x00000000        0x0 port.o
  .bss           0x00000000        0x0 port.o
@@ -401,7 +398,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x10ac
+.text           0x00000000     0x131a
  *(.vectors)
  .vectors       0x00000000       0x8c C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega1284/avr51/crtatmega1284.o
                 0x00000000                __vector_default
@@ -456,150 +453,171 @@ END GROUP
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x000000c2        0x4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega1284/avr51/crtatmega1284.o
+ .init9         0x000000c2        0x6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega1284/avr51/crtatmega1284.o
  *(.init9)
  *(.text)
- .text          0x000000c6        0x2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega1284/avr51/crtatmega1284.o
-                0x000000c6                __vector_22
-                0x000000c6                __vector_28
-                0x000000c6                __vector_1
-                0x000000c6                __vector_32
-                0x000000c6                __vector_34
-                0x000000c6                __vector_24
-                0x000000c6                __vector_12
-                0x000000c6                __bad_interrupt
-                0x000000c6                __vector_6
-                0x000000c6                __vector_31
-                0x000000c6                __vector_3
-                0x000000c6                __vector_23
-                0x000000c6                __vector_30
-                0x000000c6                __vector_25
-                0x000000c6                __vector_11
-                0x000000c6                __vector_17
-                0x000000c6                __vector_19
-                0x000000c6                __vector_7
-                0x000000c6                __vector_27
-                0x000000c6                __vector_5
-                0x000000c6                __vector_33
-                0x000000c6                __vector_4
-                0x000000c6                __vector_9
-                0x000000c6                __vector_2
-                0x000000c6                __vector_21
-                0x000000c6                __vector_15
-                0x000000c6                __vector_29
-                0x000000c6                __vector_8
-                0x000000c6                __vector_26
-                0x000000c6                __vector_14
-                0x000000c6                __vector_10
-                0x000000c6                __vector_16
-                0x000000c6                __vector_18
-                0x000000c6                __vector_20
-                0x000000c8                . = ALIGN (0x2)
+ .text          0x000000c8        0x2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega1284/avr51/crtatmega1284.o
+                0x000000c8                __vector_22
+                0x000000c8                __vector_28
+                0x000000c8                __vector_1
+                0x000000c8                __vector_32
+                0x000000c8                __vector_34
+                0x000000c8                __vector_24
+                0x000000c8                __vector_12
+                0x000000c8                __bad_interrupt
+                0x000000c8                __vector_6
+                0x000000c8                __vector_31
+                0x000000c8                __vector_3
+                0x000000c8                __vector_23
+                0x000000c8                __vector_30
+                0x000000c8                __vector_25
+                0x000000c8                __vector_11
+                0x000000c8                __vector_17
+                0x000000c8                __vector_19
+                0x000000c8                __vector_7
+                0x000000c8                __vector_27
+                0x000000c8                __vector_5
+                0x000000c8                __vector_33
+                0x000000c8                __vector_4
+                0x000000c8                __vector_9
+                0x000000c8                __vector_2
+                0x000000c8                __vector_21
+                0x000000c8                __vector_15
+                0x000000c8                __vector_29
+                0x000000c8                __vector_8
+                0x000000c8                __vector_26
+                0x000000c8                __vector_14
+                0x000000c8                __vector_10
+                0x000000c8                __vector_16
+                0x000000c8                __vector_18
+                0x000000c8                __vector_20
+                0x000000ca                . = ALIGN (0x2)
  *(.text.*)
  .text.pvPortMalloc
-                0x000000c8       0x48 heap_1.o
-                0x000000c8                pvPortMalloc
+                0x000000ca       0x48 heap_1.o
+                0x000000ca                pvPortMalloc
  .text.vPortFree
-                0x00000110        0x2 heap_1.o
-                0x00000110                vPortFree
+                0x00000112        0x2 heap_1.o
+                0x00000112                vPortFree
  .text.vListInitialise
-                0x00000112       0x1c list.o
-                0x00000112                vListInitialise
+                0x00000114       0x1c list.o
+                0x00000114                vListInitialise
  .text.vListInitialiseItem
-                0x0000012e        0x8 list.o
-                0x0000012e                vListInitialiseItem
+                0x00000130        0x8 list.o
+                0x00000130                vListInitialiseItem
  .text.vListInsertEnd
-                0x00000136       0x4e list.o
-                0x00000136                vListInsertEnd
+                0x00000138       0x4e list.o
+                0x00000138                vListInsertEnd
  .text.vListInsert
-                0x00000184       0x76 list.o
-                0x00000184                vListInsert
+                0x00000186       0x76 list.o
+                0x00000186                vListInsert
  .text.vListRemove
-                0x000001fa       0x4c list.o
-                0x000001fa                vListRemove
+                0x000001fc       0x4c list.o
+                0x000001fc                vListRemove
  .text.initUSART
-                0x00000246       0x44 mlauh001_final_project.o
-                0x00000246                initUSART
+                0x00000248       0x44 mlauh001_final_project.o
+                0x00000248                initUSART
+ .text.USART_Flush
+                0x0000028c       0x42 mlauh001_final_project.o
+                0x0000028c                USART_Flush
+ .text.USART_Send
+                0x000002ce       0x24 mlauh001_final_project.o
+                0x000002ce                USART_Send
  .text.USART_Receive
-                0x0000028a       0x24 mlauh001_final_project.o
-                0x0000028a                USART_Receive
+                0x000002f2       0x24 mlauh001_final_project.o
+                0x000002f2                USART_Receive
+ .text.USART_Send_String
+                0x00000316       0x4e mlauh001_final_project.o
+                0x00000316                USART_Send_String
  .text.Rotate_Tick
-                0x000002ae      0x1dc mlauh001_final_project.o
-                0x000002ae                Rotate_Tick
+                0x00000364      0x1c6 mlauh001_final_project.o
+                0x00000364                Rotate_Tick
  .text.RotateSecTask
-                0x0000048a        0xe mlauh001_final_project.o
-                0x0000048a                RotateSecTask
+                0x0000052a        0xe mlauh001_final_project.o
+                0x0000052a                RotateSecTask
  .text.Dispense_Tick
-                0x00000498      0x18c mlauh001_final_project.o
-                0x00000498                Dispense_Tick
+                0x00000538      0x1a8 mlauh001_final_project.o
+                0x00000538                Dispense_Tick
  .text.DispenseSecTask
-                0x00000624        0xe mlauh001_final_project.o
-                0x00000624                DispenseSecTask
+                0x000006e0        0xe mlauh001_final_project.o
+                0x000006e0                DispenseSecTask
  .text.WritePORTA_Tick
-                0x00000632       0x3e mlauh001_final_project.o
-                0x00000632                WritePORTA_Tick
+                0x000006ee       0x3e mlauh001_final_project.o
+                0x000006ee                WritePORTA_Tick
  .text.WritePORTASecTask
-                0x00000670        0xe mlauh001_final_project.o
-                0x00000670                WritePORTASecTask
+                0x0000072c        0xe mlauh001_final_project.o
+                0x0000072c                WritePORTASecTask
+ .text.PollUSART_Tick
+                0x0000073a       0x56 mlauh001_final_project.o
+                0x0000073a                PollUSART_Tick
+ .text.PollUSARTSecTask
+                0x00000790        0xe mlauh001_final_project.o
+                0x00000790                PollUSARTSecTask
+ .text.MakeDrink_Tick
+                0x0000079e      0x118 mlauh001_final_project.o
+                0x0000079e                MakeDrink_Tick
+ .text.MakeDrinkSecTask
+                0x000008b6        0xe mlauh001_final_project.o
+                0x000008b6                MakeDrinkSecTask
  .text.StartSecPulse
-                0x0000067e       0x66 mlauh001_final_project.o
-                0x0000067e                StartSecPulse
- .text.main     0x000006e4       0x22 mlauh001_final_project.o
-                0x000006e4                main
+                0x000008c4       0x8a mlauh001_final_project.o
+                0x000008c4                StartSecPulse
+ .text.main     0x0000094e       0x22 mlauh001_final_project.o
+                0x0000094e                main
  .text.pxPortInitialiseStack
-                0x00000706       0xd8 port.o
-                0x00000706                pxPortInitialiseStack
+                0x00000970       0xd8 port.o
+                0x00000970                pxPortInitialiseStack
  .text.xPortStartScheduler
-                0x000007de       0x74 port.o
-                0x000007de                xPortStartScheduler
+                0x00000a48       0x74 port.o
+                0x00000a48                xPortStartScheduler
  .text.vPortYield
-                0x00000852       0xb0 port.o
-                0x00000852                vPortYield
+                0x00000abc       0xb0 port.o
+                0x00000abc                vPortYield
  .text.vPortYieldFromTick
-                0x00000902       0xb2 port.o
-                0x00000902                vPortYieldFromTick
+                0x00000b6c       0xb2 port.o
+                0x00000b6c                vPortYieldFromTick
  .text.__vector_13
-                0x000009b4        0x4 port.o
-                0x000009b4                __vector_13
+                0x00000c1e        0x4 port.o
+                0x00000c1e                __vector_13
  .text.prvAddCurrentTaskToDelayedList
-                0x000009b8       0x6a tasks.o
+                0x00000c22       0x6a tasks.o
  .text.xTaskGenericCreate
-                0x00000a22      0x1e6 tasks.o
-                0x00000a22                xTaskGenericCreate
+                0x00000c8c      0x1e6 tasks.o
+                0x00000c8c                xTaskGenericCreate
  .text.vTaskStartScheduler
-                0x00000c08       0x52 tasks.o
-                0x00000c08                vTaskStartScheduler
+                0x00000e72       0x52 tasks.o
+                0x00000e72                vTaskStartScheduler
  .text.vTaskSuspendAll
-                0x00000c5a        0xc tasks.o
-                0x00000c5a                vTaskSuspendAll
+                0x00000ec4        0xc tasks.o
+                0x00000ec4                vTaskSuspendAll
  .text.vTaskIncrementTick
-                0x00000c66      0x182 tasks.o
-                0x00000c66                vTaskIncrementTick
+                0x00000ed0      0x182 tasks.o
+                0x00000ed0                vTaskIncrementTick
  .text.xTaskResumeAll
-                0x00000de8      0x102 tasks.o
-                0x00000de8                xTaskResumeAll
+                0x00001052      0x102 tasks.o
+                0x00001052                xTaskResumeAll
  .text.vTaskDelay
-                0x00000eea       0x36 tasks.o
-                0x00000eea                vTaskDelay
+                0x00001154       0x36 tasks.o
+                0x00001154                vTaskDelay
  .text.prvIdleTask
-                0x00000f20       0x6c tasks.o
+                0x0000118a       0x70 tasks.o
  .text.vTaskSwitchContext
-                0x00000f8c       0xd8 tasks.o
-                0x00000f8c                vTaskSwitchContext
+                0x000011fa       0xd8 tasks.o
+                0x000011fa                vTaskSwitchContext
  .text.libgcc.div
-                0x00001064       0x18 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_udivmodqi4.o)
-                0x00001064                __udivmodqi4
+                0x000012d2       0x18 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_udivmodqi4.o)
+                0x000012d2                __udivmodqi4
  .text.avr-libc
-                0x0000107c        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libc.a(memset.o)
-                0x0000107c                memset
+                0x000012ea        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libc.a(memset.o)
+                0x000012ea                memset
  .text.avr-libc
-                0x0000108a       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libc.a(strncpy.o)
-                0x0000108a                strncpy
-                0x000010a8                . = ALIGN (0x2)
+                0x000012f8       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libc.a(strncpy.o)
+                0x000012f8                strncpy
+                0x00001316                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000010a8        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
-                0x000010a8                _exit
-                0x000010a8                exit
+ .fini9         0x00001316        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
+                0x00001316                _exit
+                0x00001316                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -618,142 +636,162 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000010a8        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
+ .fini0         0x00001316        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x000010ac                _etext = .
+                0x0000131a                _etext = .
 
-.data           0x00800100       0x46 load address 0x000010ac
+.data           0x00800100       0xa2 load address 0x0000131a
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
+ .data.drinks   0x00800100       0x24 mlauh001_final_project.o
+                0x00800100                drinks
  .data.dispense_hold
-                0x00800100        0x2 mlauh001_final_project.o
-                0x00800100                dispense_hold
+                0x00800124        0x2 mlauh001_final_project.o
+                0x00800124                dispense_hold
  .data.dispense_totalcnt
-                0x00800102        0x2 mlauh001_final_project.o
-                0x00800102                dispense_totalcnt
+                0x00800126        0x2 mlauh001_final_project.o
+                0x00800126                dispense_totalcnt
  .data.next_drink
-                0x00800104        0x1 mlauh001_final_project.o
-                0x00800104                next_drink
+                0x00800128        0x1 mlauh001_final_project.o
+                0x00800128                next_drink
  .data.num_steps
-                0x00800105        0x1 mlauh001_final_project.o
-                0x00800105                num_steps
+                0x00800129        0x1 mlauh001_final_project.o
+                0x00800129                num_steps
  .data.backward_steps
-                0x00800106        0x4 mlauh001_final_project.o
-                0x00800106                backward_steps
+                0x0080012a        0x4 mlauh001_final_project.o
+                0x0080012a                backward_steps
  .data.forward_steps
-                0x0080010a        0x4 mlauh001_final_project.o
-                0x0080010a                forward_steps
+                0x0080012e        0x4 mlauh001_final_project.o
+                0x0080012e                forward_steps
  .data.xNextTaskUnblockTime
-                0x0080010e        0x2 tasks.o
+                0x00800132        0x2 tasks.o
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x00800110       0x30 mlauh001_final_project.o
+                0x00800134       0x68 mlauh001_final_project.o
  .rodata.str1.1
-                0x00800140        0x5 tasks.o
+                0x0080019c        0x5 tasks.o
  *(.gnu.linkonce.d*)
-                0x00800146                . = ALIGN (0x2)
- *fill*         0x00800145        0x1 
-                0x00800146                _edata = .
-                0x00800146                PROVIDE (__data_end, .)
+                0x008001a2                . = ALIGN (0x2)
+ *fill*         0x008001a1        0x1 
+                0x008001a2                _edata = .
+                0x008001a2                PROVIDE (__data_end, .)
 
-.bss            0x00800146      0x64e
-                0x00800146                PROVIDE (__bss_start, .)
+.bss            0x008001a2      0x654
+                0x008001a2                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.xNextFreeByte
-                0x00800146        0x2 heap_1.o
- .bss.xHeap     0x00800148      0x5dc heap_1.o
+                0x008001a2        0x2 heap_1.o
+ .bss.xHeap     0x008001a4      0x5dc heap_1.o
+ .bss.dummy.2320
+                0x00800780        0x1 mlauh001_final_project.o
+ .bss.make_drink_cnt
+                0x00800781        0x1 mlauh001_final_project.o
+                0x00800781                make_drink_cnt
+ .bss.rotate_flag
+                0x00800782        0x1 mlauh001_final_project.o
+                0x00800782                rotate_flag
+ .bss.dispense_flag
+                0x00800783        0x1 mlauh001_final_project.o
+                0x00800783                dispense_flag
+ .bss.drink_to_make
+                0x00800784        0x1 mlauh001_final_project.o
+                0x00800784                drink_to_make
+ .bss.make_drink_flag
+                0x00800785        0x1 mlauh001_final_project.o
+                0x00800785                make_drink_flag
+ .bss.received_message
+                0x00800786        0x1 mlauh001_final_project.o
+                0x00800786                received_message
  .bss.dispense_hold_cnt
-                0x00800724        0x2 mlauh001_final_project.o
-                0x00800724                dispense_hold_cnt
+                0x00800787        0x2 mlauh001_final_project.o
+                0x00800787                dispense_hold_cnt
  .bss.dispense_index
-                0x00800726        0x1 mlauh001_final_project.o
-                0x00800726                dispense_index
+                0x00800789        0x1 mlauh001_final_project.o
+                0x00800789                dispense_index
  .bss.dispense_cnt
-                0x00800727        0x2 mlauh001_final_project.o
-                0x00800727                dispense_cnt
+                0x0080078a        0x2 mlauh001_final_project.o
+                0x0080078a                dispense_cnt
  .bss.linear_stepper
-                0x00800729        0x1 mlauh001_final_project.o
-                0x00800729                linear_stepper
+                0x0080078c        0x1 mlauh001_final_project.o
+                0x0080078c                linear_stepper
  .bss.rotate_stepper
-                0x0080072a        0x1 mlauh001_final_project.o
-                0x0080072a                rotate_stepper
- .bss.received  0x0080072b        0x1 mlauh001_final_project.o
-                0x0080072b                received
+                0x0080078d        0x1 mlauh001_final_project.o
+                0x0080078d                rotate_stepper
  .bss.drink_select
-                0x0080072c        0x1 mlauh001_final_project.o
-                0x0080072c                drink_select
- .bss.drink     0x0080072d        0x1 mlauh001_final_project.o
-                0x0080072d                drink
+                0x0080078e        0x1 mlauh001_final_project.o
+                0x0080078e                drink_select
+ .bss.drink     0x0080078f        0x1 mlauh001_final_project.o
+                0x0080078f                drink
  .bss.steps_next_drink
-                0x0080072e        0x2 mlauh001_final_project.o
-                0x0080072e                steps_next_drink
+                0x00800790        0x2 mlauh001_final_project.o
+                0x00800790                steps_next_drink
  .bss.current_position
-                0x00800730        0x1 mlauh001_final_project.o
-                0x00800730                current_position
+                0x00800792        0x1 mlauh001_final_project.o
+                0x00800792                current_position
  .bss.total_cnt
-                0x00800731        0x2 mlauh001_final_project.o
-                0x00800731                total_cnt
- .bss.cnt       0x00800733        0x1 mlauh001_final_project.o
-                0x00800733                cnt
+                0x00800793        0x2 mlauh001_final_project.o
+                0x00800793                total_cnt
+ .bss.cnt       0x00800795        0x1 mlauh001_final_project.o
+                0x00800795                cnt
  .bss.uxTaskNumber
-                0x00800734        0x1 tasks.o
+                0x00800796        0x1 tasks.o
  .bss.xNumOfOverflows
-                0x00800735        0x1 tasks.o
+                0x00800797        0x1 tasks.o
  .bss.xMissedYield
-                0x00800736        0x1 tasks.o
+                0x00800798        0x1 tasks.o
  .bss.uxMissedTicks
-                0x00800737        0x1 tasks.o
+                0x00800799        0x1 tasks.o
  .bss.uxSchedulerSuspended
-                0x00800738        0x1 tasks.o
+                0x0080079a        0x1 tasks.o
  .bss.xSchedulerRunning
-                0x00800739        0x1 tasks.o
+                0x0080079b        0x1 tasks.o
  .bss.uxTopReadyPriority
-                0x0080073a        0x1 tasks.o
+                0x0080079c        0x1 tasks.o
  .bss.uxTopUsedPriority
-                0x0080073b        0x1 tasks.o
+                0x0080079d        0x1 tasks.o
  .bss.xTickCount
-                0x0080073c        0x2 tasks.o
+                0x0080079e        0x2 tasks.o
  .bss.uxCurrentNumberOfTasks
-                0x0080073e        0x1 tasks.o
+                0x008007a0        0x1 tasks.o
  .bss.uxTasksDeleted
-                0x0080073f        0x1 tasks.o
+                0x008007a1        0x1 tasks.o
  .bss.xTasksWaitingTermination
-                0x00800740        0x9 tasks.o
+                0x008007a2        0x9 tasks.o
  .bss.xPendingReadyList
-                0x00800749        0x9 tasks.o
+                0x008007ab        0x9 tasks.o
  .bss.pxOverflowDelayedTaskList
-                0x00800752        0x2 tasks.o
+                0x008007b4        0x2 tasks.o
  .bss.pxDelayedTaskList
-                0x00800754        0x2 tasks.o
+                0x008007b6        0x2 tasks.o
  .bss.xDelayedTaskList2
-                0x00800756        0x9 tasks.o
+                0x008007b8        0x9 tasks.o
  .bss.xDelayedTaskList1
-                0x0080075f        0x9 tasks.o
+                0x008007c1        0x9 tasks.o
  .bss.pxReadyTasksLists
-                0x00800768       0x24 tasks.o
+                0x008007ca       0x24 tasks.o
  .bss.pxCurrentTCB
-                0x0080078c        0x2 tasks.o
-                0x0080078c                pxCurrentTCB
+                0x008007ee        0x2 tasks.o
+                0x008007ee                pxCurrentTCB
  *(COMMON)
- COMMON         0x0080078e        0x6 mlauh001_final_project.o
-                0x0080078e                poll_usart_state
-                0x0080078f                rotate_state
-                0x00800790                dispense_state
-                0x00800791                lcd_str
-                0x00800792                write_porta_state
-                0x00800793                make_drink_state
-                0x00800794                PROVIDE (__bss_end, .)
-                0x000010ac                __data_load_start = LOADADDR (.data)
-                0x000010f2                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x008007f0        0x6 mlauh001_final_project.o
+                0x008007f0                poll_usart_state
+                0x008007f1                rotate_state
+                0x008007f2                dispense_state
+                0x008007f3                lcd_str
+                0x008007f4                write_porta_state
+                0x008007f5                make_drink_state
+                0x008007f6                PROVIDE (__bss_end, .)
+                0x0000131a                __data_load_start = LOADADDR (.data)
+                0x000013bc                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800794        0x0
+.noinit         0x008007f6        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x00800794                _end = .
+                0x008007f6                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -822,29 +860,29 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x230
+.debug_aranges  0x00000000      0x260
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x38 heap_1.o
  .debug_aranges
                 0x00000038       0x40 list.o
  .debug_aranges
-                0x00000078       0xb8 mlauh001_final_project.o
+                0x00000078       0xe8 mlauh001_final_project.o
  .debug_aranges
-                0x00000130       0x48 port.o
+                0x00000160       0x48 port.o
  .debug_aranges
-                0x00000178       0xb8 tasks.o
+                0x000001a8       0xb8 tasks.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x227c
+.debug_info     0x00000000     0x2539
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x1a5 heap_1.o
  .debug_info    0x000001a5      0x2c1 list.o
- .debug_info    0x00000466      0x9f9 mlauh001_final_project.o
- .debug_info    0x00000e5f      0x238 port.o
- .debug_info    0x00001097     0x11e5 tasks.o
+ .debug_info    0x00000466      0xcb6 mlauh001_final_project.o
+ .debug_info    0x0000111c      0x238 port.o
+ .debug_info    0x00001354     0x11e5 tasks.o
 
 .debug_abbrev   0x00000000      0x993
  *(.debug_abbrev)
@@ -854,42 +892,42 @@ END GROUP
  .debug_abbrev  0x0000053c      0x154 port.o
  .debug_abbrev  0x00000690      0x303 tasks.o
 
-.debug_line     0x00000000     0x1667
+.debug_line     0x00000000     0x186d
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x169 heap_1.o
  .debug_line    0x00000169      0x1e8 list.o
- .debug_line    0x00000351      0x750 mlauh001_final_project.o
- .debug_line    0x00000aa1      0x307 port.o
- .debug_line    0x00000da8      0x8bf tasks.o
+ .debug_line    0x00000351      0x956 mlauh001_final_project.o
+ .debug_line    0x00000ca7      0x307 port.o
+ .debug_line    0x00000fae      0x8bf tasks.o
 
-.debug_frame    0x00000000      0x574
+.debug_frame    0x00000000      0x5dc
  *(.debug_frame)
  .debug_frame   0x00000000       0x60 heap_1.o
  .debug_frame   0x00000060       0x7c list.o
- .debug_frame   0x000000dc      0x1b4 mlauh001_final_project.o
- .debug_frame   0x00000290       0x74 port.o
- .debug_frame   0x00000304      0x270 tasks.o
+ .debug_frame   0x000000dc      0x21c mlauh001_final_project.o
+ .debug_frame   0x000002f8       0x74 port.o
+ .debug_frame   0x0000036c      0x270 tasks.o
 
-.debug_str      0x00000000      0xd59
+.debug_str      0x00000000      0xeb0
  *(.debug_str)
  .debug_str     0x00000000      0x21c heap_1.o
                                 0x255 (size before relaxing)
  .debug_str     0x0000021c      0x137 list.o
                                 0x2bd (size before relaxing)
- .debug_str     0x00000353      0x43b mlauh001_final_project.o
-                                0x5fe (size before relaxing)
- .debug_str     0x0000078e       0xfe port.o
+ .debug_str     0x00000353      0x592 mlauh001_final_project.o
+                                0x6f3 (size before relaxing)
+ .debug_str     0x000008e5       0xfe port.o
                                 0x2bb (size before relaxing)
- .debug_str     0x0000088c      0x4cd tasks.o
+ .debug_str     0x000009e3      0x4cd tasks.o
                                 0x8b5 (size before relaxing)
 
-.debug_loc      0x00000000     0x1587
+.debug_loc      0x00000000     0x15a9
  *(.debug_loc)
  .debug_loc     0x00000000       0xf1 heap_1.o
  .debug_loc     0x000000f1       0xfe list.o
- .debug_loc     0x000001ef      0x418 mlauh001_final_project.o
- .debug_loc     0x00000607      0x2ac port.o
- .debug_loc     0x000008b3      0xcd4 tasks.o
+ .debug_loc     0x000001ef      0x43a mlauh001_final_project.o
+ .debug_loc     0x00000629      0x2ac port.o
+ .debug_loc     0x000008d5      0xcd4 tasks.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -909,13 +947,13 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x228
+.debug_ranges   0x00000000      0x258
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x28 heap_1.o
  .debug_ranges  0x00000028       0x30 list.o
- .debug_ranges  0x00000058       0xa8 mlauh001_final_project.o
- .debug_ranges  0x00000100       0x38 port.o
- .debug_ranges  0x00000138       0xf0 tasks.o
+ .debug_ranges  0x00000058       0xd8 mlauh001_final_project.o
+ .debug_ranges  0x00000130       0x38 port.o
+ .debug_ranges  0x00000168       0xf0 tasks.o
 
 .debug_macro
  *(.debug_macro)
