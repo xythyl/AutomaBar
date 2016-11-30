@@ -640,158 +640,158 @@ END GROUP
  *(.fini0)
                 0x0000133c                _etext = .
 
-.data           0x00800100       0xa2 load address 0x0000133c
+.data           0x00800100       0xc6 load address 0x0000133c
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
- .data.drinks   0x00800100       0x24 mlauh001_final_project.o
+ .data.drinks   0x00800100       0x48 mlauh001_final_project.o
                 0x00800100                drinks
  .data.dispense_hold
-                0x00800124        0x2 mlauh001_final_project.o
-                0x00800124                dispense_hold
+                0x00800148        0x2 mlauh001_final_project.o
+                0x00800148                dispense_hold
  .data.dispense_totalcnt
-                0x00800126        0x2 mlauh001_final_project.o
-                0x00800126                dispense_totalcnt
+                0x0080014a        0x2 mlauh001_final_project.o
+                0x0080014a                dispense_totalcnt
  .data.next_drink
-                0x00800128        0x1 mlauh001_final_project.o
-                0x00800128                next_drink
+                0x0080014c        0x1 mlauh001_final_project.o
+                0x0080014c                next_drink
  .data.num_steps
-                0x00800129        0x1 mlauh001_final_project.o
-                0x00800129                num_steps
+                0x0080014d        0x1 mlauh001_final_project.o
+                0x0080014d                num_steps
  .data.backward_steps
-                0x0080012a        0x4 mlauh001_final_project.o
-                0x0080012a                backward_steps
+                0x0080014e        0x4 mlauh001_final_project.o
+                0x0080014e                backward_steps
  .data.forward_steps
-                0x0080012e        0x4 mlauh001_final_project.o
-                0x0080012e                forward_steps
+                0x00800152        0x4 mlauh001_final_project.o
+                0x00800152                forward_steps
  .data.xNextTaskUnblockTime
-                0x00800132        0x2 tasks.o
+                0x00800156        0x2 tasks.o
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x00800134       0x68 mlauh001_final_project.o
+                0x00800158       0x68 mlauh001_final_project.o
  .rodata.str1.1
-                0x0080019c        0x5 tasks.o
+                0x008001c0        0x5 tasks.o
  *(.gnu.linkonce.d*)
-                0x008001a2                . = ALIGN (0x2)
- *fill*         0x008001a1        0x1 
-                0x008001a2                _edata = .
-                0x008001a2                PROVIDE (__data_end, .)
+                0x008001c6                . = ALIGN (0x2)
+ *fill*         0x008001c5        0x1 
+                0x008001c6                _edata = .
+                0x008001c6                PROVIDE (__data_end, .)
 
-.bss            0x008001a2      0x654
-                0x008001a2                PROVIDE (__bss_start, .)
+.bss            0x008001c6      0x654
+                0x008001c6                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.xNextFreeByte
-                0x008001a2        0x2 heap_1.o
- .bss.xHeap     0x008001a4      0x5dc heap_1.o
+                0x008001c6        0x2 heap_1.o
+ .bss.xHeap     0x008001c8      0x5dc heap_1.o
  .bss.dummy.2320
-                0x00800780        0x1 mlauh001_final_project.o
+                0x008007a4        0x1 mlauh001_final_project.o
  .bss.make_drink_cnt
-                0x00800781        0x1 mlauh001_final_project.o
-                0x00800781                make_drink_cnt
+                0x008007a5        0x1 mlauh001_final_project.o
+                0x008007a5                make_drink_cnt
  .bss.rotate_flag
-                0x00800782        0x1 mlauh001_final_project.o
-                0x00800782                rotate_flag
+                0x008007a6        0x1 mlauh001_final_project.o
+                0x008007a6                rotate_flag
  .bss.dispense_flag
-                0x00800783        0x1 mlauh001_final_project.o
-                0x00800783                dispense_flag
+                0x008007a7        0x1 mlauh001_final_project.o
+                0x008007a7                dispense_flag
  .bss.drink_to_make
-                0x00800784        0x1 mlauh001_final_project.o
-                0x00800784                drink_to_make
+                0x008007a8        0x1 mlauh001_final_project.o
+                0x008007a8                drink_to_make
  .bss.make_drink_flag
-                0x00800785        0x1 mlauh001_final_project.o
-                0x00800785                make_drink_flag
+                0x008007a9        0x1 mlauh001_final_project.o
+                0x008007a9                make_drink_flag
  .bss.received_message
-                0x00800786        0x1 mlauh001_final_project.o
-                0x00800786                received_message
+                0x008007aa        0x1 mlauh001_final_project.o
+                0x008007aa                received_message
  .bss.dispense_hold_cnt
-                0x00800787        0x2 mlauh001_final_project.o
-                0x00800787                dispense_hold_cnt
+                0x008007ab        0x2 mlauh001_final_project.o
+                0x008007ab                dispense_hold_cnt
  .bss.dispense_index
-                0x00800789        0x1 mlauh001_final_project.o
-                0x00800789                dispense_index
+                0x008007ad        0x1 mlauh001_final_project.o
+                0x008007ad                dispense_index
  .bss.dispense_cnt
-                0x0080078a        0x2 mlauh001_final_project.o
-                0x0080078a                dispense_cnt
+                0x008007ae        0x2 mlauh001_final_project.o
+                0x008007ae                dispense_cnt
  .bss.linear_stepper
-                0x0080078c        0x1 mlauh001_final_project.o
-                0x0080078c                linear_stepper
+                0x008007b0        0x1 mlauh001_final_project.o
+                0x008007b0                linear_stepper
  .bss.rotate_stepper
-                0x0080078d        0x1 mlauh001_final_project.o
-                0x0080078d                rotate_stepper
+                0x008007b1        0x1 mlauh001_final_project.o
+                0x008007b1                rotate_stepper
  .bss.drink_select
-                0x0080078e        0x1 mlauh001_final_project.o
-                0x0080078e                drink_select
- .bss.drink     0x0080078f        0x1 mlauh001_final_project.o
-                0x0080078f                drink
+                0x008007b2        0x1 mlauh001_final_project.o
+                0x008007b2                drink_select
+ .bss.drink     0x008007b3        0x1 mlauh001_final_project.o
+                0x008007b3                drink
  .bss.steps_next_drink
-                0x00800790        0x2 mlauh001_final_project.o
-                0x00800790                steps_next_drink
+                0x008007b4        0x2 mlauh001_final_project.o
+                0x008007b4                steps_next_drink
  .bss.current_position
-                0x00800792        0x1 mlauh001_final_project.o
-                0x00800792                current_position
+                0x008007b6        0x1 mlauh001_final_project.o
+                0x008007b6                current_position
  .bss.total_cnt
-                0x00800793        0x2 mlauh001_final_project.o
-                0x00800793                total_cnt
- .bss.cnt       0x00800795        0x1 mlauh001_final_project.o
-                0x00800795                cnt
+                0x008007b7        0x2 mlauh001_final_project.o
+                0x008007b7                total_cnt
+ .bss.cnt       0x008007b9        0x1 mlauh001_final_project.o
+                0x008007b9                cnt
  .bss.uxTaskNumber
-                0x00800796        0x1 tasks.o
+                0x008007ba        0x1 tasks.o
  .bss.xNumOfOverflows
-                0x00800797        0x1 tasks.o
+                0x008007bb        0x1 tasks.o
  .bss.xMissedYield
-                0x00800798        0x1 tasks.o
+                0x008007bc        0x1 tasks.o
  .bss.uxMissedTicks
-                0x00800799        0x1 tasks.o
+                0x008007bd        0x1 tasks.o
  .bss.uxSchedulerSuspended
-                0x0080079a        0x1 tasks.o
+                0x008007be        0x1 tasks.o
  .bss.xSchedulerRunning
-                0x0080079b        0x1 tasks.o
+                0x008007bf        0x1 tasks.o
  .bss.uxTopReadyPriority
-                0x0080079c        0x1 tasks.o
+                0x008007c0        0x1 tasks.o
  .bss.uxTopUsedPriority
-                0x0080079d        0x1 tasks.o
+                0x008007c1        0x1 tasks.o
  .bss.xTickCount
-                0x0080079e        0x2 tasks.o
+                0x008007c2        0x2 tasks.o
  .bss.uxCurrentNumberOfTasks
-                0x008007a0        0x1 tasks.o
+                0x008007c4        0x1 tasks.o
  .bss.uxTasksDeleted
-                0x008007a1        0x1 tasks.o
+                0x008007c5        0x1 tasks.o
  .bss.xTasksWaitingTermination
-                0x008007a2        0x9 tasks.o
+                0x008007c6        0x9 tasks.o
  .bss.xPendingReadyList
-                0x008007ab        0x9 tasks.o
+                0x008007cf        0x9 tasks.o
  .bss.pxOverflowDelayedTaskList
-                0x008007b4        0x2 tasks.o
+                0x008007d8        0x2 tasks.o
  .bss.pxDelayedTaskList
-                0x008007b6        0x2 tasks.o
+                0x008007da        0x2 tasks.o
  .bss.xDelayedTaskList2
-                0x008007b8        0x9 tasks.o
+                0x008007dc        0x9 tasks.o
  .bss.xDelayedTaskList1
-                0x008007c1        0x9 tasks.o
+                0x008007e5        0x9 tasks.o
  .bss.pxReadyTasksLists
-                0x008007ca       0x24 tasks.o
+                0x008007ee       0x24 tasks.o
  .bss.pxCurrentTCB
-                0x008007ee        0x2 tasks.o
-                0x008007ee                pxCurrentTCB
+                0x00800812        0x2 tasks.o
+                0x00800812                pxCurrentTCB
  *(COMMON)
- COMMON         0x008007f0        0x6 mlauh001_final_project.o
-                0x008007f0                poll_usart_state
-                0x008007f1                rotate_state
-                0x008007f2                dispense_state
-                0x008007f3                lcd_str
-                0x008007f4                write_porta_state
-                0x008007f5                make_drink_state
-                0x008007f6                PROVIDE (__bss_end, .)
+ COMMON         0x00800814        0x6 mlauh001_final_project.o
+                0x00800814                poll_usart_state
+                0x00800815                rotate_state
+                0x00800816                dispense_state
+                0x00800817                lcd_str
+                0x00800818                write_porta_state
+                0x00800819                make_drink_state
+                0x0080081a                PROVIDE (__bss_end, .)
                 0x0000133c                __data_load_start = LOADADDR (.data)
-                0x000013de                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00001402                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008007f6        0x0
+.noinit         0x0080081a        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x008007f6                _end = .
+                0x0080081a                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0

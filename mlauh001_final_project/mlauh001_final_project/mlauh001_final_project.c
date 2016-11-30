@@ -60,7 +60,8 @@ unsigned char received_message = 0;
 unsigned char make_drink_flag = 0;
 unsigned char drink_to_make = 0;
 
-unsigned char drinks[6][6] = {{1,0,0,0,0,1},{1,1,0,0,1,0},{0,0,1,0,1,1},{1,0,0,0,1,0},{0,1,0,1,0,1},{1,0,0,1,0,1}};
+unsigned char drinks[12][6] = {{1,0,0,0,0,1},{1,1,0,0,1,0},{0,0,1,0,1,1},{1,0,0,0,1,0},{0,1,0,1,0,1},
+	{1,0,0,1,0,1},{1,0,0,0,0,0},{0,1,0,0,0,0},{0,0,1,0,0,0},{0,0,0,1,0,0},{0,0,0,0,1,0},{0,0,0,0,0,1}};
 unsigned char dispense_flag = 0;
 unsigned char rotate_flag = 0;
 unsigned char make_drink_cnt = 0;
