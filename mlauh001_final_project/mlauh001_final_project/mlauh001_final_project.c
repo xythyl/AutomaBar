@@ -215,6 +215,7 @@ void Rotate_Tick(){
 					steps_next_drink = abs(next_drink * (drink - current_position));
 					rotate_state = go_to_drink;
 					PORTC = drink;
+					//USART_Send(drink+1,1);
 			}
 			else {
 				rotate_state = Rotate_Wait;
@@ -228,6 +229,7 @@ void Rotate_Tick(){
 				current_position = drink;
 				rotate_flag = 0x00;
 				rotate_state = Rotate_Wait;
+				USART_Send(current_position+1,1);
 			}
 			break;
 		
@@ -397,6 +399,7 @@ void MakeDrink_Tick() {
 			make_drink_cnt = 0;
 			rotate_flag = 0;
 			dispense_flag = 0;
+			USART_Send(current_position+1,1);
 			break;
 		case MakeDrink_Wait:
 			if (make_drink_flag == 0x01 && rotate_flag == 0 && dispense_flag == 0) {
@@ -452,6 +455,7 @@ void MakeDrink_Tick() {
 				make_drink_state = MakeDrink_Dispense;
 			}
 			break;
+		
 		default:
 			make_drink_state = MakeDrink_Wait;
 			break;
