@@ -21,7 +21,7 @@
 enum RotateState {Rotate_INIT, Rotate_Wait, go_to_drink} rotate_state;
 enum DispenseState {Dispense_INIT, Dispense_Wait, Dispense_Up, Dispense_Hold, Dispense_Down} dispense_state;
 enum PollUSARTState {PollUSART_INIT, PollUSART_Wait} poll_usart_state;
-enum MakeDrinkState {MakeDrink_INIT, MakeDrink_Wait, MakeDrink, MakeDrink_Rotate, MakeDrink_Dispense} make_drink_state;
+enum MakeDrinkState {MakeDrink_INIT, MakeDrink_Wait, MakeDrink, MakeDrink_Rotate, MakeDrink_Dispense, MakeDrink_Home} make_drink_state;
 enum WritePORTAState {WritePORTA_INIT, WritePORTA_Wait} write_porta_state;
 	
 #define A 0x01
@@ -60,7 +60,7 @@ unsigned char received_message = 0;
 unsigned char make_drink_flag = 0;
 unsigned char drink_to_make = 0;
 
-unsigned char drinks[6][6] = {{1,0,0,0,0,0},{1,1,0,0,1,0},{0,0,1,0,1,1},{1,0,0,0,1,0},{0,1,0,1,0,1},{1,0,0,1,0,1}};
+unsigned char drinks[6][6] = {{1,0,0,0,0,1},{1,1,0,0,1,0},{0,0,1,0,1,1},{1,0,0,0,1,0},{0,1,0,1,0,1},{1,0,0,1,0,1}};
 unsigned char dispense_flag = 0;
 unsigned char rotate_flag = 0;
 unsigned char make_drink_cnt = 0;
@@ -390,6 +390,8 @@ void MakeDrink_Tick() {
 			break;
 		case MakeDrink_Dispense:
 			break;
+		case MakeDrink_Home:
+			break;
 		default:
 			break;
 	}
@@ -417,9 +419,10 @@ void MakeDrink_Tick() {
 				drink = make_drink_cnt;
 			}
 			else if (make_drink_cnt >= 6) {
-				make_drink_state = MakeDrink_Wait;
-				USART_Send_String("page page0",0);
-				make_drink_flag = 0x00;
+				//make_drink_state = MakeDrink_Wait;
+				//USART_Send_String("page page0",0);
+				make_drink_state = MakeDrink_Home;
+				//make_drink_flag = 0x00;
 				rotate_flag = 0x01;
 				drink = 0;
 			}
@@ -455,7 +458,16 @@ void MakeDrink_Tick() {
 				make_drink_state = MakeDrink_Dispense;
 			}
 			break;
-		
+		case MakeDrink_Home:
+			if (rotate_flag == 0x00) {
+				make_drink_flag = 0x00;
+				USART_Send_String("page page0",0);
+				make_drink_state = MakeDrink_Wait;
+			}
+			else {
+				make_drink_state = MakeDrink_Home;
+			}
+			break;
 		default:
 			make_drink_state = MakeDrink_Wait;
 			break;
@@ -517,6 +529,7 @@ int main(void) {
 	
 	initUSART(0);
 	initUSART(1);
+	//USART_Send(current_position+1,1);
 	//Start Tasks  
 	StartSecPulse(1);
 	//RunSchedular 
